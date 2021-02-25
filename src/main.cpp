@@ -27,9 +27,9 @@ void get_files(fs::path &p) {
 
 double match(const std::string &s, const std::string &other) {
     double result = 0;
-    for (const std::string &pong : demonic::string_pong(other)) {
-        if (demonic::string_in_string(pong, s))
-            result += pong.length() * pong.length();
+    for (const std::string &funnel : demonic::string_funnel(other)) {
+        if (demonic::string_in_string(funnel, s))
+            result += funnel.length() * funnel.length();
     }
     return result;
 }
@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     if (argv[1]) {
         std::string arg = argv[1];
     } else {
-        fprintf(stderr, "No argument given");
+        return 0;
     }
 
     fs::path p = "/";
