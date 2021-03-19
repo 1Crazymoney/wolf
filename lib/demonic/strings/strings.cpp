@@ -3,12 +3,12 @@
 //
 
 #include "strings.h"
-#include <assert.h>
 
-bool demonic::string_in_string(const std::string& str, const std::string& full_str) {
-    if (str.length() <= full_str.length()) {
+
+bool demonic::string_in_string(const std::string &sub_str, const std::string &full_str) {
+    if (sub_str.length() <= full_str.length()) {
         for (int i = 0; i < full_str.length(); ++i) {
-            if (full_str.substr(i, str.length()) == str && (i + str.length()) <= full_str.length()) {
+            if (full_str.substr(i, sub_str.length()) == sub_str && (i + sub_str.length()) <= full_str.length()) {
                 return true;
             }
         }
@@ -16,11 +16,11 @@ bool demonic::string_in_string(const std::string& str, const std::string& full_s
     return false;
 }
 
-std::string demonic::string_space(const std::string &str, size_t spaces) {
+std::string demonic::string_space(const std::string &s, size_t spaces) {
     std::string result;
-    if (spaces >= str.length()) {
-        result = str;
-        spaces -= str.length();
+    if (spaces >= s.length()) {
+        result = s;
+        spaces -= s.length();
         for (int i = 0; i < spaces; ++i) {
             result.push_back(' ');
         }
@@ -28,14 +28,14 @@ std::string demonic::string_space(const std::string &str, size_t spaces) {
     return result;
 }
 
-std::vector<std::string> demonic::string_pong(const std::string &str) {
+std::vector<std::string> demonic::string_funnel(const std::string &s) {
     std::vector<std::string> vec;
-    int full_length = str.length();
+    int full_length = s.length();
     for (int i = 0; i < full_length; i++) {
         size_t sub_length = full_length - i;
         size_t play = full_length - sub_length;
         for (int move_pos = 0; move_pos <= play; move_pos++) {
-            std::string sub_str = str.substr(move_pos, sub_length);
+            std::string sub_str = s.substr(move_pos, sub_length);
             vec.push_back(sub_str);
         }
     }
@@ -43,7 +43,7 @@ std::vector<std::string> demonic::string_pong(const std::string &str) {
 }
 
 
-std::string demonic::string_color(const std::string &to_color, Colors color, Styles style) {
+std::string demonic::string_color(const std::string &s, Colors color, Styles style) {
     std::string result;
     std::string reset = "\u001b[0m";
     std::string style_str;
@@ -71,8 +71,7 @@ std::string demonic::string_color(const std::string &to_color, Colors color, Sty
             color_str = "\u001b[37m";
             break;
     }
-    switch (style){
-
+    switch (style) {
         case regular:
             style_str = "";
             break;
@@ -87,60 +86,69 @@ std::string demonic::string_color(const std::string &to_color, Colors color, Sty
             break;
     }
 
-    result = style_str + color_str + to_color + reset;
+    result = style_str + color_str + s + reset;
     return result;
 }
 
-std::string demonic::string_highlight(std::string str, const std::string& to_highlight, Colors color, Styles style) {
+std::string demonic::string_highlight(std::string s, const std::string &highlight, Colors color, Styles style) {
     std::string result;
-    for (size_t i = 0; i < str.length();) {
-        if (str.substr(i, to_highlight.length()) == to_highlight) {
-            result.append(string_color(to_highlight, color, style));
-            i = i + to_highlight.length();
+    for (size_t i = 0; i < s.length();) {
+        if (s.substr(i, highlight.length()) == highlight) {
+            result.append(string_color(highlight, color, style));
+            i = i + highlight.length();
         } else {
-            result.push_back(str[i]);
+            result.push_back(s[i]);
             i++;
         }
     }
     return result;
 }
 
-std::string demonic::string_lower(const std::string &str) {
+std::string demonic::string_lower(const std::string &s) {
     std::string result;
-    for (char c : str) {
+    for (char c : s) {
         result.push_back(tolower(c));
     }
     return result;
 }
 
-std::string demonic::string_upper(const std::string &str) {
+std::string demonic::string_upper(const std::string &s) {
     std::string result;
-    for (char c : str) {
+    for (char c : s) {
         result.push_back(toupper(c));
     }
     return result;
 }
 
-std::string demonic::string_from_bash(std::string command) {
-    std::string data;
+std::string demonic::string_from_bash(std::string s) {
+    std::string result;
     FILE *stream;
     const int maxBuffer = 256;
     char buffer[maxBuffer];
-    command.append(" 2>&1");
-    stream = popen(command.c_str(), "r");
+    s.append(" 2>&1");
+    stream = popen(s.c_str(), "r");
     if (stream) {
         while (!feof(stream))
             if (fgets(buffer, maxBuffer, stream) != nullptr)
-                data.append(buffer);
+                result.append(buffer);
         pclose(stream);
     }
-    return data;
+    return result;
 }
-bool demonic::string_in_vector(std::string str, std::vector<std::string> vec) {
-    for (std::string str2 : vec) {
-        if (str == str2) {
+
+
+bool demonic::string_in_vector(std::string s, std::vector<std::string> vec) {
+    for (std::string s2 : vec) {
+        if (s == s2) {
             return true;
         }
     }
+    return false;
+}
+
+bool demonic::string_has_char(const std::string &s, char c) {
+    for (char c2 : s)
+        if (c2 == c)
+            return true;
     return false;
 }

@@ -6,6 +6,8 @@
 #include "math.h"
 
 int demonic::true_rand() {
-    srand(time(0) + rand());
+    auto duration = std::chrono::system_clock::now().time_since_epoch();
+    int time = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+    srand(time);
     return rand();
 }

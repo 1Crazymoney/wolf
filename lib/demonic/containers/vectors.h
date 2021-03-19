@@ -10,10 +10,12 @@
 
 namespace demonic {
 
-    std::vector<std::string> vector_from_file(std::string file_location);
+    std::vector<std::string> vector_from_bash(std::string s);
 
-    std::vector<std::string> vector_from_bash(std::string command);
+    std::vector<std::string> vector_from_string(std::string s, char delimit);
 
-    std::vector<std::string> vector_from_string(std::string to_vec, char delimit);
+    std::vector<std::string> vector_from_file(std::string s, bool binary = false);
+
+    std::vector<std::string> vector_from_header(const std::string &header, const std::string &file);
 }
 #endif //DEMONIC_VECTORS_H

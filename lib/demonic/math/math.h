@@ -6,7 +6,7 @@
 #define DEMONIC_MATH_H
 
 #include <iostream>
-#include <ctime>
+#include <chrono>
 
 namespace demonic {
     int true_rand();

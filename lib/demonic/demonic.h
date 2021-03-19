@@ -10,5 +10,4 @@
 #include "math/math.h"
 #include "helpmaker/help.h"
 
-
 #endif //DEMONIC
